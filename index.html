@@ -17,6 +17,46 @@
             font-family: Arial, sans-serif;
         }
 
+        /* NAVBAR */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 6px;
+            color: #fff;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 3px;
+            opacity: 0.8;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        /* HERO */
         .hero {
             position: relative;
             width: 100%;
@@ -60,6 +100,16 @@
 </head>
 <body>
 
+    <!-- NAVBAR -->
+    <nav>
+        <div class="nav-logo">AJOLOTE</div>
+        <ul class="nav-links">
+            <li><a href="#videos">VIDEOS</a></li>
+            <li><a href="#contacto">CONTACTO</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
     <section class="hero">
         <iframe
             id="ytplayer"
@@ -75,7 +125,6 @@
     </section>
 
     <script>
-        // Carga la API de YouTube
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         document.head.appendChild(tag);
@@ -97,5 +146,13 @@
         }
 
         function onPlayerStateChange(event) {
-            // Cuando el video termina (estado 0), lo reinicia en hd1080
-            if (event.data === YT.Play
+            if (event.data === YT.PlayerState.ENDED) {
+                player.setPlaybackQuality('hd1080');
+                player.seekTo(0);
+                player.playVideo();
+            }
+        }
+    </script>
+
+</body>
+</html>

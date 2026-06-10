@@ -62,7 +62,8 @@
 
     <section class="hero">
         <iframe
-            src="https://www.youtube.com/embed/dlAjYemMvb8?autoplay=1&mute=1&loop=1&playlist=dlAjYemMvb8&controls=0&showinfo=0&rel=0&modestbranding=1&vq=hd1080"
+            id="ytplayer"
+            src="https://www.youtube.com/embed/dlAjYemMvb8?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&vq=hd1080&enablejsapi=1"
             frameborder="0"
             allow="autoplay; fullscreen">
         </iframe>
@@ -73,5 +74,28 @@
         </div>
     </section>
 
-</body>
-</html>
+    <script>
+        // Carga la API de YouTube
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(tag);
+
+        var player;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('ytplayer', {
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            event.target.setPlaybackQuality('hd1080');
+            event.target.playVideo();
+        }
+
+        function onPlayerStateChange(event) {
+            // Cuando el video termina (estado 0), lo reinicia en hd1080
+            if (event.data === YT.Play
